@@ -1,0 +1,38 @@
+# UTF-8
+#
+# PixelTrace Windows PE Version Information Resource
+#
+VSVersionInfo(
+  ffi=FixedFileInfo(
+    filevers=(1, 0, 0, 0),
+    prodvers=(1, 0, 0, 0),
+    mask=0x3f,
+    flags=0x0,
+    OS=0x40004,
+    fileType=0x1,
+    subtype=0x0,
+    date=(0, 0)
+  ),
+  kids=[
+    StringFileInfo(
+      [
+        StringTable(
+          '040904b0',
+          [
+            StringStruct('CompanyName', 'PixelTrace Open Source Forensics'),
+            StringStruct('FileDescription', 'PixelTrace Digital Image Forensics Workstation'),
+            StringStruct('FileVersion', '1.0.0.0'),
+            StringStruct('InternalName', 'PixelTrace'),
+            StringStruct('LegalCopyright', 'Copyright (C) 2026 PixelTrace Contributors'),
+            StringStruct('OriginalFilename', 'PixelTrace.exe'),
+            StringStruct('ProductName', 'PixelTrace Forensics Workstation'),
+            StringStruct('ProductVersion', '1.0.0.0'),
+            StringStruct('Comments', 'Offline local digital image forensics, metadata inspection, and Error Level Analysis workstation.')
+          ]
+        )
+      ]
+    ),
+    VarFileInfo([VarStruct('Translation', [1033, 1200])])
+  ]
+)
+

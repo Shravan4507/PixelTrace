@@ -53,11 +53,19 @@
 
 ## Quick Start (Windows)
 
-### Option 1: Standalone Portable Executable (Zero Dependencies)
-Download `PixelTrace.exe` directly from the [GitHub Releases](https://github.com/Shravan4507/PixelTrace/releases) page.
-Simply double-click `PixelTrace.exe`—it launches the airgapped workstation at `http://127.0.0.1:8000` and automatically opens your browser. No Python, Node.js, or package installation required.
+### Option 1: Official Windows Installer (`PixelTrace-Setup.exe` - Recommended)
+Download `PixelTrace-Setup.exe` from [GitHub Releases](https://github.com/Shravan4507/PixelTrace/releases).
+- Standard Windows Installation Wizard.
+- Installs to `%LocalAppData%\Programs\PixelTrace` (no administrator privileges or UAC prompts required).
+- Creates a **Desktop Shortcut** with custom forensic icon.
+- Adds **PixelTrace** to the Windows Start Menu & registers in Windows "Installed apps" for clean removal.
+- Launches as a dedicated standalone desktop app window (no browser tabs or URL bars).
 
-### Option 2: One-Click Launcher (`start.bat`)
+### Option 2: Standalone Portable Binary (`PixelTrace.exe`)
+Download `PixelTrace.exe` directly from [GitHub Releases](https://github.com/Shravan4507/PixelTrace/releases).
+Single-file portable executable with zero installation needed.
+
+### Option 3: One-Click Source Launcher (`start.bat`)
 If you cloned the source code, double-click:
 ```cmd
 start.bat
