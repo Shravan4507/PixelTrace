@@ -1,5 +1,6 @@
 import os
 import sys
+import io
 import time
 import socket
 import shutil
@@ -7,6 +8,24 @@ import threading
 import subprocess
 import webbrowser
 from pathlib import Path
+
+# Safe stream fallback for PyInstaller --windowed (GUI mode) on Windows.
+# In GUI mode, Windows detaches standard I/O streams, leaving sys.stdout and sys.stderr as None.
+# Libraries like Uvicorn call sys.stdout.isatty() inside ColourizedFormatter, raising AttributeError.
+class SafeStream(io.StringIO):
+    def isatty(self):
+        return False
+    def write(self, s):
+        pass
+    def flush(self):
+        pass
+
+if sys.stdout is None or not hasattr(sys.stdout, "isatty"):
+    sys.stdout = SafeStream()
+if sys.stderr is None or not hasattr(sys.stderr, "isatty"):
+    sys.stderr = SafeStream()
+if sys.stdin is None or not hasattr(sys.stdin, "isatty"):
+    sys.stdin = SafeStream()
 
 # Adjust path for PyInstaller frozen environment
 if getattr(sys, 'frozen', False):
@@ -77,7 +96,7 @@ def main():
         return
 
     threading.Thread(target=launch_app_window, args=(f"http://127.0.0.1:{port}",), daemon=True).start()
-    uvicorn.run(app, host="127.0.0.1", port=port, log_level="warning")
+    uvicorn.run(app, host="127.0.0.1", port=port, log_level="warning", use_colors=False)
 
 if __name__ == "__main__":
     main()
