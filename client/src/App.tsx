@@ -2,35 +2,20 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AppLayout } from './components/layout/AppLayout';
 
-// Lazy-loaded routes for optimal workstation performance
-const DashboardPage = lazy(() =>
-  import('./pages/dashboard/DashboardPage').then((m) => ({ default: m.DashboardPage }))
+// Direct, focused forensic pages
+const AnalyzerPage = lazy(() =>
+  import('./pages/analysis/AnalyzerPage').then((m) => ({ default: m.AnalyzerPage }))
 );
-const CasesPage = lazy(() =>
-  import('./pages/cases/CasesPage').then((m) => ({ default: m.CasesPage }))
+const ComparatorPage = lazy(() =>
+  import('./pages/comparison/ComparatorPage').then((m) => ({ default: m.ComparatorPage }))
 );
-const CaseDetailPage = lazy(() =>
-  import('./pages/cases/CaseDetailPage').then((m) => ({ default: m.CaseDetailPage }))
-);
-const EvidencePage = lazy(() =>
-  import('./pages/evidence/EvidencePage').then((m) => ({ default: m.EvidencePage }))
-);
-const AnalysisPage = lazy(() =>
-  import('./pages/analysis/AnalysisPage').then((m) => ({ default: m.AnalysisPage }))
-);
-const ComparisonPage = lazy(() =>
-  import('./pages/comparison/ComparisonPage').then((m) => ({ default: m.ComparisonPage }))
-);
-const ReportsPage = lazy(() =>
-  import('./pages/reports/ReportsPage').then((m) => ({ default: m.ReportsPage }))
-);
-const SettingsPage = lazy(() =>
-  import('./pages/settings/SettingsPage').then((m) => ({ default: m.SettingsPage }))
+const MethodologyPage = lazy(() =>
+  import('./pages/settings/MethodologyPage').then((m) => ({ default: m.MethodologyPage }))
 );
 
 const PageLoader: React.FC = () => (
   <div style={{ padding: '60px', textAlign: 'center', color: '#888888', letterSpacing: '0.08em', fontSize: '12px' }}>
-    LOADING FORENSIC MODULE...
+    LOADING FORENSIC WORKSPACE...
   </div>
 );
 
@@ -43,63 +28,23 @@ export const App: React.FC = () => {
             index
             element={
               <Suspense fallback={<PageLoader />}>
-                <DashboardPage />
+                <AnalyzerPage />
               </Suspense>
             }
           />
           <Route
-            path="cases"
+            path="compare"
             element={
               <Suspense fallback={<PageLoader />}>
-                <CasesPage />
+                <ComparatorPage />
               </Suspense>
             }
           />
           <Route
-            path="cases/:caseId"
+            path="methodology"
             element={
               <Suspense fallback={<PageLoader />}>
-                <CaseDetailPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="evidence"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <EvidencePage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="analysis"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <AnalysisPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="comparison"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <ComparisonPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="reports"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <ReportsPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="settings"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <SettingsPage />
+                <MethodologyPage />
               </Suspense>
             }
           />
@@ -111,4 +56,3 @@ export const App: React.FC = () => {
 };
 
 export default App;
-

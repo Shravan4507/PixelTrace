@@ -1,25 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import {
-  LayoutDashboard,
-  FolderLock,
-  Image as ImageIcon,
-  ScanEye,
-  GitCompare,
-  FileText,
-  ShieldCheck,
-  Server
-} from 'lucide-react';
+import { ScanEye, GitCompare, BookOpen, Server } from 'lucide-react';
 
 export const Sidebar: React.FC = () => {
   const navItems = [
-    { to: '/', label: 'Dashboard', icon: LayoutDashboard },
-    { to: '/cases', label: 'Cases', icon: FolderLock },
-    { to: '/evidence', label: 'Evidence Library', icon: ImageIcon },
-    { to: '/analysis', label: 'Forensic Analysis', icon: ScanEye },
-    { to: '/comparison', label: 'Image Comparison', icon: GitCompare },
-    { to: '/reports', label: 'Reports', icon: FileText },
-    { to: '/settings', label: 'Audit & Custody', icon: ShieldCheck },
+    { to: '/', label: 'Image Analyzer', icon: ScanEye },
+    { to: '/compare', label: 'Image Comparator', icon: GitCompare },
+    { to: '/methodology', label: 'Methodology & Guide', icon: BookOpen },
   ];
 
   return (
@@ -36,7 +23,7 @@ export const Sidebar: React.FC = () => {
     }}>
       {/* Branding Header */}
       <div style={{
-        padding: '20px 16px',
+        padding: '24px 18px',
         borderBottom: '1px solid var(--border-color)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -47,7 +34,7 @@ export const Sidebar: React.FC = () => {
             borderRadius: 'var(--radius-strict)'
           }} />
           <h1 style={{
-            fontSize: '14px',
+            fontSize: '15px',
             margin: 0,
             letterSpacing: '0.1em',
             fontWeight: 700
@@ -58,27 +45,28 @@ export const Sidebar: React.FC = () => {
         <div style={{
           fontSize: '10px',
           color: 'var(--text-secondary)',
-          marginTop: '4px',
+          marginTop: '6px',
           letterSpacing: '0.05em'
         }}>
-          DIGITAL IMAGE FORENSICS // 1.0.0
+          DIGITAL IMAGE FORENSICS // v1.0
         </div>
       </div>
 
       {/* Navigation List */}
-      <nav style={{ flex: 1, padding: '12px 8px' }}>
+      <nav style={{ flex: 1, padding: '16px 10px' }}>
         <ul style={{ listStyle: 'none' }}>
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
-              <li key={item.to} style={{ marginBottom: '4px' }}>
+              <li key={item.to} style={{ marginBottom: '6px' }}>
                 <NavLink
                   to={item.to}
+                  end={item.to === '/'}
                   style={({ isActive }) => ({
                     display: 'flex',
                     alignItems: 'center',
                     gap: '10px',
-                    padding: '8px 12px',
+                    padding: '10px 14px',
                     fontSize: '12px',
                     fontWeight: 700,
                     textTransform: 'uppercase',
@@ -100,23 +88,22 @@ export const Sidebar: React.FC = () => {
         </ul>
       </nav>
 
-      {/* Localhost Security Indicator Footer */}
+      {/* Local Airgap Footer */}
       <div style={{
-        padding: '12px 16px',
+        padding: '16px 18px',
         borderTop: '1px solid var(--border-color)',
         backgroundColor: '#0a0a0a'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
           <Server size={12} color="#ffffff" />
           <span style={{ fontSize: '10px', fontWeight: 700, color: '#ffffff', letterSpacing: '0.05em' }}>
-            LOCAL OFFLINE NODE
+            LOCAL AIRGAP MODE
           </span>
         </div>
         <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>
-          127.0.0.1:8000 // STRICT AIRGAP
+          127.0.0.1:8000 // OFFLINE
         </div>
       </div>
     </aside>
   );
 };
-

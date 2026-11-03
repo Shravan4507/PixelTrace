@@ -33,6 +33,32 @@ async function handleResponse<T>(res: Response): Promise<T> {
 }
 
 export const api = {
+  // Direct Zero-Friction Analysis
+  async analyzeImage(file: File, quality = 95, scale = 15, examinerName = 'Forensic Examiner'): Promise<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('quality', String(quality));
+    formData.append('scale', String(scale));
+    formData.append('examiner_name', examinerName);
+    const res = await fetch(`${API_BASE}/analyze`, {
+      method: 'POST',
+      body: formData,
+    });
+    return handleResponse<any>(res);
+  },
+
+  // Direct Dual-Image Comparison
+  async compareDirect(referenceFile: File, comparisonFile: File): Promise<any> {
+    const formData = new FormData();
+    formData.append('reference_file', referenceFile);
+    formData.append('comparison_file', comparisonFile);
+    const res = await fetch(`${API_BASE}/compare`, {
+      method: 'POST',
+      body: formData,
+    });
+    return handleResponse<any>(res);
+  },
+
   // Instant Forensic Scan (Zero friction drag & drop)
   async quickScan(file: File): Promise<any> {
     const formData = new FormData();

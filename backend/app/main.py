@@ -11,6 +11,8 @@ from backend.app.core.logging import logger
 from backend.app.services.validation_service import ValidationError
 
 from backend.app.api.routes import (
+    direct_analyzer,
+    quick_scan,
     cases,
     evidence,
     metadata,
@@ -19,8 +21,7 @@ from backend.app.api.routes import (
     comparison,
     reports,
     audit,
-    dashboard,
-    quick_scan
+    dashboard
 )
 
 @asynccontextmanager
@@ -87,6 +88,7 @@ def health_check():
 
 # Register API v1 Routers
 api_v1 = settings.API_V1_STR
+app.include_router(direct_analyzer.router, prefix=api_v1)
 app.include_router(quick_scan.router, prefix=api_v1)
 app.include_router(cases.router, prefix=api_v1)
 app.include_router(evidence.router, prefix=api_v1)

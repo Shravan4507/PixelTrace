@@ -36,6 +36,7 @@ yarn-error.log*
 data/cases/*
 data/temporary/*
 data/database/*
+data/reports/*
 !data/cases/.gitkeep
 !data/temporary/.gitkeep
 !data/database/.gitkeep
