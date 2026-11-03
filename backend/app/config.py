@@ -1,10 +1,18 @@
+import sys
 from pathlib import Path
 from pydantic import BaseModel
 
-# Resolve PixelTrace root directory (2 levels up from backend/app)
-APP_DIR = Path(__file__).resolve().parent
-BACKEND_DIR = APP_DIR.parent
-PROJECT_ROOT = BACKEND_DIR.parent
+if getattr(sys, "frozen", False):
+    # PyInstaller temporary bundle root where bundled assets reside
+    BUNDLE_ROOT = Path(sys._MEIPASS)
+    # The actual folder on user's machine where PixelTrace.exe is running (where data & reports should persist)
+    PROJECT_ROOT = Path(sys.executable).resolve().parent
+    APP_DIR = BUNDLE_ROOT / "backend" / "app"
+else:
+    APP_DIR = Path(__file__).resolve().parent
+    BACKEND_DIR = APP_DIR.parent
+    PROJECT_ROOT = BACKEND_DIR.parent
+    BUNDLE_ROOT = PROJECT_ROOT
 
 class Settings(BaseModel):
     PROJECT_NAME: str = "PixelTrace"
@@ -13,6 +21,8 @@ class Settings(BaseModel):
     
     # Path configuration
     ROOT_DIR: Path = PROJECT_ROOT
+    BUNDLE_DIR: Path = BUNDLE_ROOT
+    DIST_DIR: Path = BUNDLE_ROOT / "client" / "dist"
     DATA_DIR: Path = PROJECT_ROOT / "data"
     CASES_DIR: Path = PROJECT_ROOT / "data" / "cases"
     TEMP_DIR: Path = PROJECT_ROOT / "data" / "temporary"

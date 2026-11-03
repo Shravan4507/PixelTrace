@@ -592,3 +592,4 @@ export const AnalyzerPage: React.FC = () => {
     </div>
   );
 };
+

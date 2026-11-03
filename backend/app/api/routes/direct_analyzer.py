@@ -14,6 +14,7 @@ from backend.app.services.validation_service import ValidationService, Validatio
 from backend.app.services.metadata_service import MetadataService
 from backend.app.services.ela_service import ELAService
 from backend.app.services.direct_report_service import DirectReportService
+from backend.app.utils.serialization import sanitize_for_json
 
 router = APIRouter(tags=["Forensic Analyzer"])
 
@@ -88,7 +89,7 @@ async def analyze_image(
             examiner_name=examiner_name
         )
 
-        return {
+        return sanitize_for_json({
             "session_id": session_id,
             "file_info": {
                 "filename": original_filename,
@@ -118,7 +119,7 @@ async def analyze_image(
                 "ela_image_url": f"/api/v1/artifacts/{ela_artifact_name}"
             },
             "pdf_report_url": f"/api/v1/artifacts/{pdf_path.name}"
-        }
+        })
 
     except ValidationError as ve:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(ve))
@@ -187,7 +188,7 @@ async def compare_two_images(
         else:
             summary = f"Binary mismatch with differing dimensions ({ref_w}x{ref_h} vs {cmp_w}x{cmp_h})."
 
-        return {
+        return sanitize_for_json({
             "reference": {
                 "filename": reference_file.filename,
                 "format": ref_fmt,
@@ -212,7 +213,7 @@ async def compare_two_images(
             "size_difference_bytes": cmp_size - ref_size,
             "mean_squared_error": mse,
             "summary": summary
-        }
+        })
 
     except ValidationError as ve:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(ve))
@@ -241,3 +242,4 @@ def get_artifact(filename: str):
         media_type = "application/octet-stream"
 
     return FileResponse(file_path, media_type=media_type)
+

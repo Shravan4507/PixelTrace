@@ -31,6 +31,7 @@ def build():
         "PyInstaller",
         "--noconfirm",
         "--clean",
+        "--onefile",
         "--name", "PixelTrace",
         "--add-data", add_data_dist,
         "--add-data", add_data_fonts,
@@ -45,16 +46,26 @@ def build():
         "--hidden-import", "uvicorn.protocols.websockets.auto",
         "--hidden-import", "uvicorn.lifespans",
         "--hidden-import", "uvicorn.lifespans.on",
+        "--hidden-import", "uvicorn.lifespans.off",
+        "--hidden-import", "multipart",
         "--hidden-import", "reportlab",
+        "--hidden-import", "reportlab.lib",
+        "--hidden-import", "reportlab.platypus",
+        "--hidden-import", "reportlab.pdfgen",
+        "--hidden-import", "reportlab.pdfbase",
+        "--hidden-import", "reportlab.pdfbase.ttfonts",
         "--hidden-import", "exifread",
         "--hidden-import", "PIL",
+        "--hidden-import", "PIL.Image",
+        "--hidden-import", "PIL.ExifTags",
         "--hidden-import", "numpy",
+        "--hidden-import", "sqlite3",
         "backend/launcher.py"
     ]
 
     subprocess.run(cmd, cwd=str(ROOT_DIR), check=True)
     print("\n[3/3] Standalone build complete! Output is located in:")
-    print(f"      {ROOT_DIR / 'dist' / 'PixelTrace'}")
+    print(f"      {ROOT_DIR / 'dist' / 'PixelTrace.exe'}")
 
 if __name__ == "__main__":
     build()

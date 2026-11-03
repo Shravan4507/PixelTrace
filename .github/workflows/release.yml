@@ -1,0 +1,81 @@
+name: Release Standalone Executable
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    name: Build Windows Standalone .EXE
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: 'pip'
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: client/package-lock.json
+
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r backend/requirements.txt
+          python -m pip install pyinstaller
+
+      - name: Build Frontend Assets
+        working-directory: ./client
+        run: |
+          npm ci
+          npm run build
+
+      - name: Run Test Verification
+        run: |
+          python -m pytest tests -v
+
+      - name: Compile Standalone Executable with PyInstaller
+        run: |
+          python scripts/build_exe.py
+
+      - name: Create Release and Upload PixelTrace.exe
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+        with:
+          files: dist/PixelTrace.exe
+          name: PixelTrace ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name || 'v1.0.0' }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          body: |
+            ### PixelTrace — Digital Image Forensics Workstation
+            
+            **Single-File Standalone Portable Windows Executable**
+            
+            #### Capabilities:
+            - **Local & Offline**: Zero network calls, zero cloud storage, full air-gap compliance.
+            - **Multi-Method Forensic Pipeline**:
+              - EXIF metadata extraction & sanitization
+              - Cryptographic integrity hashing (SHA-256, MD5)
+              - Error Level Analysis (ELA) with anomaly classification
+              - Dual-image comparative raster diffing (MSE)
+              - Formal PDF forensic report generation
+            
+            #### Quick Start:
+            1. Download `PixelTrace.exe` below.
+            2. Double-click to run. Your browser will automatically launch the local interface at `http://127.0.0.1:8000`.
+            3. No Python, Node.js, or external software installation required!

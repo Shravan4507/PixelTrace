@@ -5,14 +5,12 @@ import time
 import webbrowser
 from pathlib import Path
 
-# Adjust path for PyInstaller bundled environment
 if getattr(sys, 'frozen', False):
-    bundle_dir = Path(sys._MEIPASS)
+    exe_dir = Path(sys.executable).resolve().parent
+    os.chdir(exe_dir)
 else:
     bundle_dir = Path(__file__).resolve().parent.parent
-
-# Set working directory to project root or bundle directory
-os.chdir(bundle_dir)
+    os.chdir(bundle_dir)
 
 import uvicorn
 from backend.app.main import app

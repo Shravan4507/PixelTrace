@@ -232,3 +232,4 @@ class DirectReportService:
 
         doc.build(story, canvasmaker=SimpleNumberedCanvas)
         return pdf_path
+

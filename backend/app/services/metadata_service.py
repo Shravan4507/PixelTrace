@@ -4,6 +4,7 @@ from typing import Any, Optional
 import exifread
 from PIL import Image, ExifTags
 from backend.app.core.logging import logger
+from backend.app.utils.serialization import sanitize_for_json
 
 class MetadataService:
     @staticmethod
@@ -64,7 +65,11 @@ class MetadataService:
                 if hasattr(img, "info"):
                     # Check for ICC profile, DPI, etc.
                     if "dpi" in img.info:
-                        image_properties["dpi"] = [round(v, 2) for v in img.info["dpi"]]
+                        dpi_val = img.info["dpi"]
+                        if isinstance(dpi_val, (tuple, list)):
+                            image_properties["dpi"] = [round(float(v), 2) for v in dpi_val]
+                        elif isinstance(dpi_val, (int, float)):
+                            image_properties["dpi"] = [round(float(dpi_val), 2), round(float(dpi_val), 2)]
         except Exception as e:
             logger.warning(f"Failed to read basic image properties: {e}")
 
@@ -196,7 +201,7 @@ class MetadataService:
             gps_info["is_sensitive"] = True
             gps_info["warning"] = "SENSITIVE EVIDENCE: Image contains embedded geographic coordinates revealing capture location."
 
-        return {
+        return sanitize_for_json({
             "has_exif": has_exif,
             "image_properties": image_properties,
             "camera_info": camera_info,
@@ -204,5 +209,5 @@ class MetadataService:
             "gps_info": gps_info,
             "raw_tags": raw_tags,
             "methodology_note": "EXIF metadata can be easily stripped, forged, or altered. It does not constitute independently verified proof of image origin."
-        }
+        })
 

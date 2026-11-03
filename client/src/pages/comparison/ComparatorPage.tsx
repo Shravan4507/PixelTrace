@@ -332,3 +332,4 @@ export const ComparatorPage: React.FC = () => {
     </div>
   );
 };
+

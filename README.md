@@ -53,14 +53,18 @@
 
 ## Quick Start (Windows)
 
-### Option 1: One-Click Launcher (Recommended)
-Simply clone the repository and double-click:
+### Option 1: Standalone Portable Executable (Zero Dependencies)
+Download `PixelTrace.exe` directly from the [GitHub Releases](https://github.com/Shravan4507/PixelTrace/releases) page.
+Simply double-click `PixelTrace.exe`—it launches the airgapped workstation at `http://127.0.0.1:8000` and automatically opens your browser. No Python, Node.js, or package installation required.
+
+### Option 2: One-Click Launcher (`start.bat`)
+If you cloned the source code, double-click:
 ```cmd
 start.bat
 ```
 `start.bat` will self-heal missing dependencies, build the web client if needed, launch the server, and open `http://127.0.0.1:8000`.
 
-### Option 2: Manual Terminal Execution
+### Option 3: Manual Terminal Execution
 ```powershell
 # 1. Install backend dependencies
 python -m pip install -r backend/requirements.txt

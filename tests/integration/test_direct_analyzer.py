@@ -63,3 +63,4 @@ def test_direct_compare_endpoint(client: TestClient):
     assert data["dimensions_match"] is True
     assert data["mean_squared_error"] is not None
     assert data["mean_squared_error"] > 0
+

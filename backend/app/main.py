@@ -71,7 +71,7 @@ async def general_exception_handler(request: Request, exc: Exception):
     logger.error("Unhandled internal exception: %s", exc, exc_info=True)
     return JSONResponse(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        content={"error": "InternalServerError", "message": "An internal forensic processing error occurred."}
+        content={"error": "InternalServerError", "message": f"Forensic processing error: {str(exc)}"}
     )
 
 # Health endpoints
@@ -101,7 +101,7 @@ app.include_router(audit.router, prefix=api_v1)
 app.include_router(dashboard.router, prefix=api_v1)
 
 # Serve Compiled React Client in Single-Port Production Mode
-dist_dir = settings.ROOT_DIR / "client" / "dist"
+dist_dir = settings.DIST_DIR
 if dist_dir.exists() and (dist_dir / "index.html").exists():
     app.mount("/assets", StaticFiles(directory=str(dist_dir / "assets")), name="static_assets")
     if (dist_dir / "fonts").exists():
