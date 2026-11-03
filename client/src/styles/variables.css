@@ -1,0 +1,35 @@
+:root {
+  /* Strict Monochromatic Palette */
+  --bg-primary: #000000;
+  --bg-panel: #0a0a0a;
+  --bg-elevated: #111111;
+  --bg-subtle: #161616;
+
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --text-inverse: #000000;
+
+  --border-color: #222222;
+  --border-subtle: #1a1a1a;
+  --border-active: #444444;
+
+  /* Functional alert colors only */
+  --color-error: #ef4444;
+  --color-error-bg: #1f0f0f;
+  --color-warning: #f59e0b;
+  --color-warning-bg: #1f180a;
+  --color-success: #10b981;
+  --color-success-bg: #0c1a14;
+
+  /* Geometry & Typography Rules */
+  --radius-strict: 4px;
+  --font-family-global: 'D-DIN', -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+}
+

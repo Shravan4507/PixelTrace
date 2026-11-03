@@ -1,0 +1,16 @@
+{
+  "name": "pixeltrace",
+  "version": "1.0.0",
+  "description": "PixelTrace - Digital Image Forensics & Evidence Analysis Platform",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix client run dev",
+    "build": "npm --prefix client run build",
+    "test": "pytest tests",
+    "start:backend": "python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --reload"
+  },
+  "keywords": ["forensics", "ela", "metadata", "exif", "hashing", "digital-evidence"],
+  "author": "PixelTrace Forensic Team",
+  "license": "OFL-1.1"
+}
+

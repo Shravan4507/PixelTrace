@@ -1,0 +1,21 @@
+[project]
+name = "pixeltrace-backend"
+version = "1.0.0"
+description = "Digital Image Forensics & Evidence Analysis Backend"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "pydantic>=2.8.0",
+    "pillow>=10.4.0",
+    "numpy>=1.26.0",
+    "opencv-python-headless>=4.10.0",
+    "exifread>=3.0.0",
+    "reportlab>=4.2.0",
+    "python-multipart>=0.0.9",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+
